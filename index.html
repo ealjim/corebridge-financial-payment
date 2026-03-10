@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Retirement Dashboard (Demo)</title>
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --card:#111a2e;
+      --card2:#0f1730;
+      --text:#eaf0ff;
+      --muted:#a8b3d6;
+      --line:rgba(255,255,255,.10);
+      --accent:#7c5cff;
+      --accent2:#21c7a8;
+      --warn:#ff5c7a;
+      --pill:#101a33;
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 600px at 25% 0%, rgba(124,92,255,.25), transparent 55%),
+                  radial-gradient(900px 500px at 90% 20%, rgba(33,199,168,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+
+    .frame{
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px 22px 92px; /* bottom space for nav */
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom: 16px;
+    }
+    .back{
+      width:38px;height:38px;border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      display:flex;align-items:center;justify-content:center;
+      user-select:none;
+    }
+    .title{
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing:.2px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:16px;
+      align-items: start;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .pad{ padding: 18px; }
+
+    /* Left: balance card */
+    .balanceWrap{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+    }
+    .balanceHeader{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .subtle{
+      color:var(--muted);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .bigMoney{
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: .3px;
+      margin-top: 6px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(124,92,255,.45);
+      background: rgba(124,92,255,.12);
+      color: var(--text);
+      font-weight: 650;
+      cursor: pointer;
+      text-decoration:none;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ background: rgba(124,92,255,.18); }
+
+    .kpiList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      border-left: 1px solid var(--line);
+      padding-left: 14px;
+    }
+    .kpi{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .kpi strong{ font-size: 13px; }
+    .kpi span{ color: var(--muted); font-size: 13px; }
+
+    /* Right: strategy card */
+    .strategyTitle{
+      font-size: 16px;
+      font-weight: 750;
+      margin:0 0 8px;
+    }
+    .ctaRow{
+      display:flex;
+      gap:10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .btnGhost{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+    }
+    .btnGhost:hover{ background: rgba(255,255,255,.09); }
+
+    .goalBox{
+      display:grid;
+      grid-template-columns: 1fr 150px;
+      gap: 14px;
+      align-items:center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+    .ring{
+      width:150px;height:150px;border-radius: 999px;
+      background:
+        conic-gradient(var(--accent) 0 83%, rgba(255,255,255,.10) 83% 100%);
+      display:flex;align-items:center;justify-content:center;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: inset 0 0 0 12px rgba(15,23,48,.85);
+    }
+    .ringInner{
+      width: 110px; height: 110px;
+      border-radius: 999px;
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;
+      background: rgba(15,23,48,.95);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .ringInner .pct{
+      font-size: 22px;
+      font-weight: 850;
+    }
+    .ringInner .tiny{
+      color:var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* Lower section: contributions + donut */
+    .lowerGrid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .tabs{
+      display:flex;
+      gap: 14px;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 18px 0;
+    }
+    .tab{
+      padding: 12px 4px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+      border-bottom: 3px solid transparent;
+    }
+    .tab.active{
+      color: var(--text);
+      border-bottom-color: var(--accent);
+    }
+
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .row:last-child{ border-bottom:none; }
+    .row .label{ color: var(--muted); font-size: 13px; }
+    .row .value{ font-weight: 800; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight: 750;
+      font-size: 13px;
+      text-decoration:none;
+    }
+
+    .donutWrap{
+      display:flex;
+      gap: 18px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap: wrap;
+    }
+    .donut{
+      width: 210px; height: 210px;
+      border-radius: 999px;
+      background:
+        conic-gradient(var(--accent) 0 58%, var(--accent2) 58% 100%);
+      position:relative;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: inset 0 0 0 16px rgba(15,23,48,.85);
+    }
+    .donut:after{
+      content:"";
+      position:absolute; inset: 50px;
+      border-radius: 999px;
+      background: rgba(15,23,48,.95);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .legend{
+      flex: 1;
+      min-width: 260px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .legendItem{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .dot{
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      margin-top: 4px;
+      flex: 0 0 auto;
+    }
+    .legendLeft{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    .legendTitle{
+      font-weight: 850;
+      font-size: 13px;
+    }
+    .legendMeta{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: 1.25;
+    }
+    .legendRight{
+      font-weight: 850;
+      font-size: 13px;
+      white-space:nowrap;
+    }
+
+    /* Bottom nav */
+    .bottomNav{
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: rgba(10,14,26,.78);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding: 10px 10px 12px;
+    }
+    .navRow{
+      max-width: 1180px;
+      margin: 0 auto;
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .navItem{
+      flex: 1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 6px;
+      padding: 10px 6px;
+      border-radius: 14px;
+      text-decoration:none;
+      color: var(--muted);
+      border: 1px solid transparent;
+      user-select:none;
+      min-width: 0;
+    }
+    .navItem:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.10);
+      color: var(--text);
+    }
+    .navIcon{
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      background: rgba(124,92,255,.20);
+      border: 1px solid rgba(124,92,255,.35);
+    }
+    .navLabel{
+      font-size: 12px;
+      font-weight: 750;
+      text-align:center;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .balanceWrap{ grid-template-columns: 1fr; }
+      .kpiList{ border-left:none; padding-left:0; }
+      .goalBox{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="topbar">
+      <div class="back">←</div>
+      <div class="title">Good morning, John</div>
+    </div>
+
+    <div class="grid">
+      <!-- Left main balance card -->
+      <div class="card pad">
+        <div class="balanceWrap">
+          <div>
+            <div class="balanceHeader">
+              <div>
+                <div class="subtle"><strong style="color:var(--text)">My plan balance</strong> • ABC Organization</div>
+                <div class="subtle">401k &amp; Savings Plan</div>
+                <div class="bigMoney">$154,454.14</div>
+              </div>
+              <a class="btn" href="https://example.com" onclick="return false;">Link outside assets</a>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="pill" href="statements.html">Access statements</a>
+              <span class="pill" style="cursor:default;">View plan snapshot</span>
+            </div>
+          </div>
+
+          <div class="kpiList">
+            <div class="kpi">
+              <strong>Rate of return</strong>
+              <span>2.31%</span>
+            </div>
+            <div class="kpi">
+              <strong>Last 12 months</strong>
+              <span>5.39%</span>
+            </div>
+            <div class="kpi">
+              <strong>Year to date</strong>
+              <span>5.39%</span>
+            </div>
+            <div class="kpi">
+              <strong>Quarter to date</strong>
+              <span>5.39%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right strategy card -->
+      <div class="card pad">
+        <div class="strategyTitle">Consider reviewing your strategy.</div>
+        <div class="subtle">
+          Learn how small changes to your contributions or asset allocation can help you get back on track.
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn" href="https://example.com" onclick="return false;">Take action</a>
+          <a class="btn btnGhost" href="https://example.com" onclick="return false;">Get expert advice</a>
+        </div>
+
+        <div class="goalBox">
+          <div>
+            <div class="subtle">Target monthly income goal</div>
+            <div style="font-size:18px;font-weight:850;margin-top:4px;">$3,207.00</div>
+            <div class="subtle" style="margin-top:8px;">How is this calculated?</div>
+          </div>
+          <div class="ring" aria-label="Goal progress ring">
+            <div class="ringInner">
+              <div class="pct">83%</div>
+              <div class="tiny">of your goal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lower section -->
+    <div class="lowerGrid">
+      <div class="card">
+        <div class="tabs">
+          <div class="tab active">Contributions</div>
+          <div class="tab">Contribution sources</div>
+          <div class="tab">Plan snapshot</div>
+        </div>
+        <div class="pad">
+          <div class="row">
+            <div class="label">Annual max contribution</div>
+            <div class="value">$31,000.00</div>
+          </div>
+          <div class="row">
+            <div class="label">Pre-tax contribution</div>
+            <div class="value">3.00% <span style="color:var(--muted);font-weight:700;margin-left:10px;">Change</span></div>
+          </div>
+          <div class="row">
+            <div class="label">Post-tax contribution</div>
+            <div class="value">3.00% <span style="color:var(--muted);font-weight:700;margin-left:10px;">Change</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <div class="donutWrap">
+          <div class="donut" aria-label="Contribution donut chart"></div>
+
+          <div class="legend">
+            <div class="legendItem">
+              <div class="legendLeft">
+                <div class="dot" style="background:var(--accent)"></div>
+                <div>
+                  <div class="legendTitle">Your contributions</div>
+                  <div class="legendMeta">
+                    Last contribution on 01/03/2025<br/>
+                    Contributions year to date: $163.00<br/>
+                    Total since enrollment: $10,305.19
+                  </div>
+                </div>
+              </div>
+              <div class="legendRight">$100,305.19</div>
+            </div>
+
+            <div class="legendItem">
+              <div class="legendLeft">
+                <div class="dot" style="background:var(--accent2)"></div>
+                <div>
+                  <div class="legendTitle">Employer contributions</div>
+                  <div class="legendMeta">
+                    Last contribution on 01/03/2025<br/>
+                    Contributions year to date: $163.00<br/>
+                    Total since enrollment: $4,058.95
+                  </div>
+                </div>
+              </div>
+              <div class="legendRight">$54,058.95</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom navigation -->
+  <div class="bottomNav" role="navigation" aria-label="Bottom navigation">
+    <div class="navRow">
+      <a class="navItem" href="statements.html">
+        <div class="navIcon"></div>
+        <div class="navLabel">Access statements</div>
+      </a>
+      <a class="navItem" href="#" onclick="return false;">
+        <div class="navIcon"></div>
+        <div class="navLabel">Check transaction history</div>
+      </a>
+      <a class="navItem" href="#" onclick="return false;">
+        <div class="navIcon"></div>
+        <div class="navLabel">View fund &amp; asset breakdown</div>
+      </a>
+      <a class="navItem" href="#" onclick="return false;">
+        <div class="navIcon"></div>
+        <div class="navLabel">Request one-time withdrawal</div>
+      </a>
+      <a class="navItem" href="#" onclick="return false;">
+        <div class="navIcon"></div>
+        <div class="navLabel">Manage beneficiaries</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

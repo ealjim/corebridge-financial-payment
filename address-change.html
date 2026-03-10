@@ -7,11 +7,11 @@
   <style>
     :root{
       --bg:#0b0f1a;
-      --card:#111a2e;
       --text:#eaf0ff;
       --muted:#a8b3d6;
       --line:rgba(255,255,255,.10);
       --accent:#7c5cff;
+      --brand:#4F00CA; /* Corebridge Purple */
       --danger:#ff5c7a;
       --success:#21c7a8;
       --radius:18px;
@@ -23,12 +23,21 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
       background: var(--bg);
       color: var(--text);
-      padding:24px;
+    }
+
+    /* ===== Top Banner ===== */
+    .top-banner{
+      background:#4F00CA;
+      padding:16px 24px;
+      font-size:20px;
+      font-weight:800;
+      letter-spacing:.5px;
     }
 
     .frame{
       max-width: 1000px;
       margin: 0 auto;
+      padding: 24px;
     }
 
     h1{
@@ -140,6 +149,11 @@
   </style>
 </head>
 <body>
+
+<!-- Corebridge Banner -->
+<div class="top-banner">
+  Corebridge Financial
+</div>
 
 <div class="frame">
   <h1>Address Update</h1>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Address Change</title>
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --card:#111a2e;
+      --text:#eaf0ff;
+      --muted:#a8b3d6;
+      --line:rgba(255,255,255,.10);
+      --accent:#7c5cff;
+      --danger:#ff5c7a;
+      --success:#21c7a8;
+      --radius:18px;
+      --shadow:0 12px 40px rgba(0,0,0,.35);
+    }
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+      background: var(--bg);
+      color: var(--text);
+      padding:24px;
+    }
+
+    .frame{
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1{
+      font-size:24px;
+      margin-bottom:20px;
+    }
+
+    .status{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:20px;
+      color: var(--accent);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:20px;
+      margin-bottom:25px;
+    }
+
+    .card{
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3{
+      margin-top:0;
+      margin-bottom:15px;
+      font-size:16px;
+      font-weight:800;
+      color: var(--muted);
+    }
+
+    .address-line{
+      margin-bottom:6px;
+      font-weight:600;
+    }
+
+    .button-row{
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      margin-top:10px;
+    }
+
+    .btn{
+      padding:12px 30px;
+      border-radius:12px;
+      font-weight:800;
+      border:none;
+      cursor:pointer;
+      font-size:14px;
+    }
+
+    .cancel{
+      background: rgba(255,255,255,.10);
+      border:1px solid var(--line);
+      color: var(--text);
+    }
+
+    .cancel:hover{
+      background: rgba(255,255,255,.18);
+    }
+
+    .confirm{
+      background: var(--success);
+      color:#000;
+    }
+
+    .confirm:hover{
+      background: #29e3c1;
+    }
+
+    .bottomNav{
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: rgba(10,14,26,.9);
+      border-top: 1px solid var(--line);
+      padding: 10px;
+    }
+
+    .navRow{
+      max-width: 1000px;
+      margin: 0 auto;
+      display:flex;
+      justify-content: space-between;
+    }
+
+    .navItem{
+      color: var(--muted);
+      text-decoration:none;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .navItem:hover{
+      color: var(--text);
+    }
+
+    @media (max-width: 768px){
+      .grid{
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="frame">
+  <h1>Address Update</h1>
+
+  <div class="status">In progress...</div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Old Address</h3>
+      <div class="address-line">219 Liberty Ave.</div>
+      <div class="address-line">St. Johns, FL</div>
+      <div class="address-line">32259</div>
+    </div>
+
+    <div class="card">
+      <h3>New Address</h3>
+      <div class="address-line">2102 Auburn Rd.</div>
+      <div class="address-line">Indianapolis, IN</div>
+      <div class="address-line">46077</div>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <button class="btn cancel" onclick="alert('Address change canceled')">Cancel</button>
+    <button class="btn confirm" onclick="alert('Address change confirmed')">Confirm</button>
+  </div>
+</div>
+
+<div class="bottomNav">
+  <div class="navRow">
+    <a class="navItem" href="index.html">Dashboard</a>
+    <a class="navItem" href="statements.html">Statements</a>
+    <a class="navItem" href="#">Support</a>
+  </div>
+</div>
+
+</body>
+</html>

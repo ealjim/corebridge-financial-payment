@@ -196,6 +196,22 @@
         font-size: 17px;
       }
     }
+  .add-btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(139, 92, 255, 0.4);
+      background: rgba(139, 92, 255, 0.1);
+      color: var(--purple-soft);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .add-btn:hover {
+      background: rgba(139, 92, 255, 0.2);
+    }
+
   </style>
 </head>
 <body>
@@ -259,6 +275,7 @@
           <div class="field-group">
             <label class="label" for="primaryAllocation">Allocation</label>
             <input id="primaryAllocation" type="text" placeholder="Enter allocation" />
+          <button type="button" class="add-btn">Add Beneficiary</button>
           </div>
         </div>
 
@@ -275,6 +292,7 @@
           <div class="field-group">
             <label class="label" for="contingentAllocation">Allocation</label>
             <input id="contingentAllocation" type="text" placeholder="Enter allocation" />
+          <button type="button" class="add-btn">Add Beneficiary</button>
           </div>
         </div>
       </article>

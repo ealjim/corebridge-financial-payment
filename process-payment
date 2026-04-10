@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corebridge Financial - Loan Payment</title>
+  <style>
+    :root {
+      --bg: #03081d;
+      --panel: #171d2e;
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --purple: #6c1dff;
+      --purple-text: #8b5cff;
+      --mint: #58d2be;
+      --text: #ffffff;
+      --muted: #d8ddef;
+      --button-dark: #2a2f40;
+      --button-dark-border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .top-bar {
+      background: linear-gradient(90deg, #5b14e6 0%, #6c1dff 100%);
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+    }
+
+    .logo-box {
+      background: #ffffff;
+      color: #1b2040;
+      padding: 10px 18px 8px;
+      font-weight: 700;
+      line-height: 1;
+      text-align: left;
+      min-width: 128px;
+    }
+
+    .logo-box .small {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 44px 34px 70px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .status {
+      margin-top: 24px;
+      color: var(--purple-text);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .cards {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      padding: 26px 24px 28px;
+      min-height: 178px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .detail {
+      margin-bottom: 12px;
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .label {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-width: 142px;
+      height: 50px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-cancel {
+      background: var(--button-dark);
+      border-color: var(--button-dark-border);
+      color: var(--text);
+    }
+
+    .btn-process {
+      background: var(--mint);
+      color: #000000;
+      box-shadow: 0 10px 24px rgba(88, 210, 190, 0.18);
+    }
+
+    @media (max-width: 820px) {
+      .page {
+        padding: 32px 20px 48px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo-box" aria-label="Corebridge Financial logo">
+      corebridge
+      <span class="small">financial</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1>Loan Payment</h1>
+    <div class="status">In progress...</div>
+
+    <section class="cards" aria-label="Loan payment details">
+      <article class="card">
+        <h2>Customer Details</h2>
+
+        <div class="detail">
+          <span class="label">Customer Name</span>
+          Jonathan Sundholm
+        </div>
+
+        <div class="detail">
+          <span class="label">Account Number</span>
+          ******8963
+        </div>
+
+        <div class="detail">
+          <span class="label">Outstanding Loan Balance</span>
+          $9,634.26
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Payment Details</h2>
+
+        <div class="detail">
+          <span class="label">Payment Amount</span>
+          $250
+        </div>
+
+        <div class="detail">
+          <span class="label">Card Number</span>
+          ************4444
+        </div>
+
+        <div class="detail">
+          <span class="label">Expiration</span>
+          11/30
+        </div>
+
+        <div class="detail">
+          <span class="label">CVV</span>
+          ***
+        </div>
+      </article>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+      <button type="button" class="btn btn-process" id="processBtn">Process Payment</button>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('cancelBtn').addEventListener('click', function () {
+      window.history.back();
+    });
+
+    document.getElementById('processBtn').addEventListener('click', function () {
+      window.location.href = 'https://ealjim.github.io/corebridge-financial-payment/index.html';
+    });
+  </script>
+</body>
+</html>

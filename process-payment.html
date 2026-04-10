@@ -18,9 +18,7 @@
       --button-dark-border: rgba(255, 255, 255, 0.08);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -38,21 +36,9 @@
       padding: 0 24px;
     }
 
-    .logo-box {
-      background: #ffffff;
-      color: #1b2040;
-      padding: 10px 18px 8px;
-      font-weight: 700;
-      line-height: 1;
-      text-align: left;
-      min-width: 128px;
-    }
-
-    .logo-box .small {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-top: 2px;
+    .logo-img {
+      height: 40px;
+      object-fit: contain;
     }
 
     .page {
@@ -131,13 +117,8 @@
       transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
 
     .btn-cancel {
       background: var(--button-dark);
@@ -152,26 +133,15 @@
     }
 
     @media (max-width: 820px) {
-      .page {
-        padding: 32px 20px 48px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        min-height: auto;
-      }
+      .page { padding: 32px 20px 48px; }
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: auto; }
     }
   </style>
 </head>
 <body>
   <header class="top-bar">
-    <div class="logo-box" aria-label="Corebridge Financial logo">
-      corebridge
-      <span class="small">financial</span>
-    </div>
+    <img src="corebridge-logo.png" alt="Corebridge Financial" class="logo-img" />
   </header>
 
   <main class="page">
@@ -189,7 +159,7 @@
 
         <div class="detail">
           <span class="label">Account Number</span>
-          ******8963
+          ***45
         </div>
 
         <div class="detail">
